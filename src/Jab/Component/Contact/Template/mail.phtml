@@ -1,0 +1,12 @@
+<table> 
+    <tr>
+	<td>Name</td>
+	<td>Wert</td>
+    </tr>
+<?php foreach ($this->inputs as $oInput): ?>
+    <tr>
+	<td><?= $oInput->name ?></td>
+	<td><?= $oInput->value ?></td>
+    </tr>
+<?php endforeach; ?>
+</table>

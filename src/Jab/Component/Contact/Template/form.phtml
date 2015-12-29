@@ -1,0 +1,11 @@
+<h1>
+    <?= $this->contact->header ?>
+</h1>
+<form method="POST">
+    <?php foreach ($this->contact->inputs as $oInput): ?>
+	<div class="form-group">
+	    <?= $oInput; ?>
+	</div>
+    <?php endforeach; ?>
+    <input type="hidden" name="form_sent_<?= $this->contact->id?>" value="1">
+</form>
