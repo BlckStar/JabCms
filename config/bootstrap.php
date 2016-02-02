@@ -1,5 +1,5 @@
 <?php
-
+session_start();
 require_once 'autoload.php';
 chdir(dirname(__FILE__));
 define('JAB_ROOT', dirname(dirname(__FILE__)));

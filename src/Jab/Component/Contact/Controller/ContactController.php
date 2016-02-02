@@ -38,25 +38,33 @@ class ContactController implements Component  {
     public function display() {
 	$aInputs = App::get()->getInput();
 	if(isset($aInputs['form_sent_' . $this->contact_id])) {
-	    $oContactModel = $this->getModel();
-	    $oForm         = $oContactModel->get($this->contact_id);
-	    $oInputs       = $oContactModel->getInputs($this->contact_id);
-	    mail(
-		$oForm->recipient,
-		$oForm->subject,
-		$this->buildHtml($oInputs, $aInputs),
-		'From: ' . $oForm->sender
-	    );
-	   $oBlock = new BlockController('/Jab/Component/Contact/Template/');
-	   echo $oBlock->render('thankyou.phtml');
+	    if(isset($aInputs['contact_sp_' . $this->contact_id]) 
+		&& $aInputs['contact_sp_' . $this->contact_id] == $_SESSION['contact_' . $this->contact_id . '_sp']
+	    ) {
+		$_SESSION['contact_' . $this->contact_id . '_sp'] = NULL;
+		$oContactModel = $this->getModel();
+		$oForm         = $oContactModel->get($this->contact_id);
+		$oInputs       = $oContactModel->getInputs($this->contact_id);
+		mail(
+		    $oForm->recipient,
+		    $oForm->subject,
+		    $this->buildHtml($oInputs, $aInputs),
+		    'From: ' . $oForm->sender
+		);
+	       $oBlock = new BlockController('/Jab/Component/Contact/Template/');
+	       echo $oBlock->render('thankyou.phtml');
+	    }
 	}
 	$oContact = $this->get();
 	return $this->render($oContact);
     }
     
     public function render($oContact) {
+	$sGuid = uniqid();
+	$_SESSION['contact_' . $oContact->id . '_sp'] = $sGuid;
 	$oBlockController = new BlockController('/Jab/Component/Contact/Template/');
 	$oBlockController->contact = $oContact;
+	$oBlockController->guid    = $sGuid;
 	return $oBlockController->render('form.phtml');
     }
     

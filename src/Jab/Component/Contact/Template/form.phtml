@@ -8,4 +8,5 @@
 	</div>
     <?php endforeach; ?>
     <input type="hidden" name="form_sent_<?= $this->contact->id?>" value="1">
+    <input type="hidden" name="contact_sp_<?= $this->contact->id?>" value="<?= $this->guid ?>">
 </form>
