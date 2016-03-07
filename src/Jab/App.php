@@ -104,6 +104,14 @@ class App {
 	return $this->oRouter;
     }
     
+    public function getMailer() {
+	if(!$this->oMailer) {
+	    $sMailerClass = 'Jab/Misc/Mailer/' . $this->aConfig['mailer'] . 'Mailer';
+	    $this->oMailer = new $sMailerClass($this->aConfig['mailer_options']);
+	}
+	return $this->oMailer;
+    }
+    
     public function getInput($method = INPUT_POST) {
 	return filter_input_array($method);
     }

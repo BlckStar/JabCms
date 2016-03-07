@@ -7,5 +7,13 @@ return array(
     'db_user'    => 'cms',
     'db_pw'      => 'cms',
     'db_charset' => 'utf8',
-    'db_options' => array()
+    'db_options' => array(),
+    'mailer'     => 'SMTP',
+    'mailer_options' => array(
+	'host' => '',
+	'port' => '',
+	'auth' => false,
+	'username' => '',
+	'password' => ''
+    ),
 );
