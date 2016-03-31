@@ -1,0 +1,32 @@
+<script>
+	window.addEventListener('load', function () {
+
+	var editor = ContentTools.EditorApp.get();
+	editor.init('[data-editable]', 'data-name');
+
+	editor.addEventListener('saved', function (ev) {
+		if (Object.keys(ev.detail().regions).length === 0) {
+			return;
+		}
+		var regions = ev.detail().regions;
+		if (regions.length == 0){
+			return;
+		}
+		var data = new FormData();
+		data.append("regions", JSON.stringify(regions));
+		data.append("id", window.contentId);
+		this.busy(true);
+		var saved = this;
+		var xhr = new XMLHttpRequest();
+		xhr.addEventListener('readystatechange', function(ev) {
+			if(xhr.readyState == 4 && xhr.status == 200) {
+				console.log(xhr.responseText);
+				saved.busy(false);
+			}
+		});
+		xhr.open('POST', 'api.php?task=article.update', true);
+		xhr.send(data);
+	});
+	
+});
+</script>
